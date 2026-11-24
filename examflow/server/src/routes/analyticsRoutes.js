@@ -1,0 +1,1 @@
+import {Router} from 'express';import {overview,questionPerformance} from '../controllers/analyticsController.js';import {protect,authorize} from '../middleware/auth.js';const r=Router();r.use(protect,authorize('admin','faculty'));r.get('/overview',overview);r.get('/exams/:id/questions',questionPerformance);export default r;

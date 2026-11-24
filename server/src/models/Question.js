@@ -1,0 +1,5 @@
+import mongoose from 'mongoose';
+const optionSchema=new mongoose.Schema({text:{type:String,required:true},key:{type:String,required:true}},{_id:false});
+const questionSchema=new mongoose.Schema({createdBy:{type:mongoose.Schema.Types.ObjectId,ref:'User',required:true,index:true},prompt:{type:String,required:true,trim:true},options:{type:[optionSchema],validate:v=>v.length>=2},correctKey:{type:String,required:true,select:false},explanation:{type:String,default:'',select:false},subject:{type:String,required:true,index:true},topic:{type:String,required:true,index:true},difficulty:{type:String,enum:['easy','medium','hard'],default:'medium'},defaultMarks:{type:Number,min:0.5,default:1},negativeMarks:{type:Number,min:0,default:0},type:{type:String,enum:['mcq'],default:'mcq'},isArchived:{type:Boolean,default:false}},{timestamps:true});
+questionSchema.index({subject:1,topic:1,difficulty:1});
+export default mongoose.model('Question',questionSchema);
